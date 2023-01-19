@@ -17,24 +17,49 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import bel.lisoveliy.selector.logic.Data
 import bel.lisoveliy.selector.ui.theme.SelectorTheme
 import bel.lisoveliy.selector.viewmodels.MainVM
 
 class MainActivity : ComponentActivity() {
 
+    lateinit var navController : NavHostController
     @SuppressLint("SourceLockedOrientationActivity")//DEBUG FEATURE
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            navController = rememberNavController()
             val context = LocalContext.current
             //Orientation lock
             (context as? Activity)?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             Data.InitStreams(context)
-            MainRenderer()
+            //NavHost
+            NavHost(navController = navController, startDestination = "menu")
+            {
+                composable("menu"){
+                    MainRenderer()
+                }
+                composable("otherNav"){
+                    Renderer2()
+                }
+            }
         }
     }
-
+    @Composable
+    fun Renderer2(){
+        SelectorTheme {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colors.background
+            ){
+                Text("Other Nav")
+            }
+        }
+    }
     @Composable
     @Preview
     fun MainRenderer()
@@ -61,7 +86,7 @@ class MainActivity : ComponentActivity() {
         MainVM.UpdateState
         MainVM.streamButtons.forEach {
             Button(
-                onClick = {},
+                onClick = { navController.navigate("otherNav")},
                 modifier = Modifier
                     .width(300.dp)
                     .height(150.dp)
@@ -73,7 +98,7 @@ class MainActivity : ComponentActivity() {
                     it.IconDiscription,
                     modifier = Modifier
                         .align(Alignment.Bottom)
-                        .clickable(onClick = {it.onClicked(it)}))
+                        .clickable(onClick = { it.onClicked(it) }))
             }
         }
     }
