@@ -43,14 +43,14 @@ class MainActivity : ComponentActivity() {
                 composable("menu"){
                     MainRenderer()
                 }
-                composable("otherNav"){
-                    Renderer2()
+                composable("streamCreator"){
+                    CreateStreamRenderer()
                 }
             }
         }
     }
     @Composable
-    fun Renderer2(){
+    fun CreateStreamRenderer(){
         SelectorTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -86,7 +86,7 @@ class MainActivity : ComponentActivity() {
         MainVM.UpdateState
         MainVM.streamButtons.forEach {
             Button(
-                onClick = { navController.navigate("otherNav")},
+                onClick = {},
                 modifier = Modifier
                     .width(300.dp)
                     .height(150.dp)
