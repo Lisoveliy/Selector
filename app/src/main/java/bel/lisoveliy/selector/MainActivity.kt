@@ -26,7 +26,6 @@ import bel.lisoveliy.selector.view.Main
 import bel.lisoveliy.selector.view.StreamCreator
 
 class MainActivity : ComponentActivity() {
-
     private lateinit var navController : NavHostController
     @SuppressLint("SourceLockedOrientationActivity")//DEBUG FEATURE
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +64,6 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainRenderer() {
         SelectorTheme {
-            // A surface container using the 'background' color from the theme
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colors.background
@@ -83,7 +81,6 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainPreview(){
         SelectorTheme {
-            // A surface container using the 'background' color from the theme
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colors.background

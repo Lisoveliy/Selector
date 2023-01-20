@@ -1,8 +1,8 @@
 package bel.lisoveliy.selector.viewmodels
 
+import android.annotation.SuppressLint
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -10,7 +10,9 @@ import bel.lisoveliy.selector.logic.Data
 import bel.lisoveliy.selector.logic.SType
 import bel.lisoveliy.selector.logic.Stream
 
+@SuppressLint("MutableCollectionMutableState")
 object MainVM {
+    var showDeleteDialog by mutableStateOf(false)
     var streamButtons by mutableStateOf(ConvertToStreamButton(Data.Streams))
     //Instance of Addable button
     object ButtonCreateStream{
@@ -25,12 +27,19 @@ object MainVM {
         return output
     }
     class StreamButton(title: String, url: String, type: SType, id: Long) : Stream(title, url, type, id){
-        var Icon by mutableStateOf(Icons.Default.Delete)
-        var IconDiscription by mutableStateOf("Add stream")
-        fun onClicked(self: StreamButton)
+        fun onClickedRemoved(self: StreamButton)
         {
             Data.DeleteFromStreams(self)
             streamButtons = ConvertToStreamButton(Data.Streams)
         }
+        fun onClickedEdited(self: StreamButton)
+        {
+            self.hashCode()
+            //TODO: Edit Stream
+        }
+//        fun onClicked(/*self: StreamButton*/)
+//        {
+//
+//        }
     }
 }
