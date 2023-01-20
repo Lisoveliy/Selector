@@ -3,6 +3,7 @@ package bel.lisoveliy.selector.view
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -52,7 +53,9 @@ object StreamCreator {
     @Composable
     fun URLField(){
         TextField(
-            modifier = Modifier.fillMaxWidth().padding(10.dp, 0.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp, 0.dp),
             value = URLField.value,
             onValueChange = URLField::onValueChange,
             label = { Text(URLField.label) },
@@ -70,7 +73,9 @@ object StreamCreator {
     @Composable
     fun TitleField(){
         TextField(
-            modifier = Modifier.fillMaxWidth().padding(10.dp, 0.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp, 0.dp),
             value = TitleField.value,
             onValueChange = TitleField::onValueChange,
             label = { Text(TitleField.label) },
@@ -85,12 +90,13 @@ object StreamCreator {
             )
         }
     }
-    @OptIn(DelicateCoroutinesApi::class)
+
     @Composable
     fun SaveStreamButton(navController: NavHostController){
+        val corScore = rememberCoroutineScope()
         Button(
             onClick = {
-                GlobalScope.launch {
+                corScore.launch(Dispatchers.Default) {
                     if(StreamCreatorVM.MakeChecks()){
                         StreamCreatorVM.SaveButton.onPressed()
                         withContext(Dispatchers.Main) {

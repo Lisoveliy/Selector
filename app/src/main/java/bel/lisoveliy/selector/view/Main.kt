@@ -1,6 +1,8 @@
 package bel.lisoveliy.selector.view
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
@@ -8,7 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.*
 import androidx.navigation.NavHostController
 import bel.lisoveliy.selector.viewmodels.MainVM
 
@@ -24,30 +26,30 @@ object Main {
             Button(
                 onClick = {},
                 modifier = Modifier
-                    .width(300.dp)
-                    .height(150.dp)
+                    .height(170.dp)
                     .padding(20.dp, 20.dp)
             ) {
                 Column {
-                    Text(text = "Title: ${it.title}")
-                    Text(text = "URL: ${it.url}")
-                    Text(text = "ID: ${it.id}")
-                    Text(text = "Type: ${it.type.name}")
-                    Row (
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier.fillMaxWidth()) {
-                        Icon(
-                            it.Icon,
-                            it.IconDiscription,
-                            modifier = Modifier
-                                .clickable(onClick = { it.onClicked(it) })
-                        )
+                    Text(text = it.title, fontSize = 30.sp, modifier = Modifier.height(50.dp))
+                    Text(text = "URL: ${it.url}", modifier = Modifier.height(20.dp).
+                    horizontalScroll(state = ScrollState(0)))
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalAlignment = Alignment.Bottom,
+                        ) {
+                                Text(text = it.type.name)
+                                Spacer(modifier = Modifier.weight(1f))
+                                Icon(
+                                    it.Icon,
+                                    it.IconDiscription,
+                                    modifier = Modifier
+                                        .clickable(onClick = { it.onClicked(it) })
+                                )
+                        }
                     }
                 }
             }
         }
-    }
-
     @Composable
     private fun ButtonCreateRenderer(navController : NavHostController) {
         Button(
@@ -65,3 +67,4 @@ object Main {
         }
     }
 }
+
