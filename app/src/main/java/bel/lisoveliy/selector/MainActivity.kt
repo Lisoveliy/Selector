@@ -24,6 +24,7 @@ import bel.lisoveliy.selector.logic.Stream
 import bel.lisoveliy.selector.ui.theme.SelectorTheme
 import bel.lisoveliy.selector.view.Main
 import bel.lisoveliy.selector.view.StreamCreator
+import bel.lisoveliy.selector.view.StreamEditor
 
 class MainActivity : ComponentActivity() {
     private lateinit var navController : NavHostController
@@ -45,10 +46,23 @@ class MainActivity : ComponentActivity() {
                 composable("streamCreator"){
                     StreamCreatorRenderer()
                 }
+                composable("streamEditor"){
+                    StreamEditorRenderer()
+                }
             }
         }
     }
-
+    @Composable
+    fun StreamEditorRenderer() {
+        SelectorTheme {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colors.background
+            ) {
+                StreamEditor.Render(navController)
+            }
+        }
+    }
     @Composable
     fun StreamCreatorRenderer() {
         SelectorTheme {

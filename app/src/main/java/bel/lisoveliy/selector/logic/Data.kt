@@ -26,6 +26,15 @@ object Data{
         Log.v("Data: AddToStreams", "Stream added. Streams size: ${Streams.size}")
         SaveStreams()
     }
+    fun EditStream(stream: Stream)
+    {
+        val index = Streams.indexOfFirst {
+            it.id == stream.id
+        }
+        Streams.set(index, stream)
+        Log.v("Data: AddToStreams", "Stream added. Streams size: ${Streams.size}")
+        SaveStreams()
+    }
     fun DeleteFromStreams(element: Stream)
     {
         Streams.removeIf {

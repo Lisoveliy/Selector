@@ -17,13 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavHostController
 import bel.lisoveliy.selector.viewmodels.MainVM
+import bel.lisoveliy.selector.viewmodels.StreamEditorVM
 
 object Main {
-    private lateinit var remstream: MainVM.StreamButton
+    private lateinit var removeStreamConfirmElement: MainVM.StreamButton
 
     @Composable
     fun Render(navController: NavHostController) {
-        ButtonsRenderer()
+        ButtonsRenderer(navController)
         ButtonCreateRenderer(navController)
         if (MainVM.showDeleteDialog) {
             AlertDialog(
@@ -41,7 +42,7 @@ object Main {
                         Button(
                             modifier = Modifier.padding(8.dp, 0.dp),
                             onClick = {
-                                remstream.onClickedRemoved(remstream); MainVM.showDeleteDialog =
+                                removeStreamConfirmElement.onClickedRemoved(removeStreamConfirmElement); MainVM.showDeleteDialog =
                                 false
                             }
                         ) {
@@ -59,7 +60,7 @@ object Main {
     }
 
     @Composable
-    private fun ButtonsRenderer() {
+    private fun ButtonsRenderer(navController: NavHostController) {
         MainVM.streamButtons.forEach {
             Button(
                 onClick = {},
@@ -85,14 +86,18 @@ object Main {
                             Icons.Default.Edit,
                             "Edit",
                             modifier = Modifier
-                                .clickable(onClick = { it.onClickedEdited(it) })
+                                .clickable(onClick = {
+                                    StreamEditorVM.editableElement = it
+                                    StreamEditorVM.PrepareFields()
+                                    navController.navigate("streamEditor")
+                                })
                         )
                         Icon(
                             Icons.Default.Delete,
                             "Delete",
                             modifier = Modifier
                                 .clickable(onClick = {
-                                    remstream = it; MainVM.showDeleteDialog = true
+                                    removeStreamConfirmElement = it; MainVM.showDeleteDialog = true
                                 })
                         )
                     }

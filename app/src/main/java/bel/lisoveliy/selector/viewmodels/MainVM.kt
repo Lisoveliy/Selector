@@ -34,8 +34,7 @@ object MainVM {
         }
         fun onClickedEdited(self: StreamButton)
         {
-            self.hashCode()
-            //TODO: Edit Stream
+
         }
 //        fun onClicked(/*self: StreamButton*/)
 //        {
