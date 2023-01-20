@@ -29,7 +29,7 @@ import bel.lisoveliy.selector.viewmodels.MainVM
 
 class MainActivity : ComponentActivity() {
 
-    lateinit var navController : NavHostController
+    lateinit var navController: NavHostController
     @SuppressLint("SourceLockedOrientationActivity")//DEBUG FEATURE
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colors.background
             ) {
-                StreamCreator.Render()
+                StreamCreator.Render(navController)
             }
         }
     }
@@ -77,7 +77,8 @@ class MainActivity : ComponentActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.verticalScroll(ScrollState(0))
                 ) {
-                    Main.Render()
+                    var hi = MainVM.UpdateState
+                    Main.Render(navController)
                 }
             }
         }

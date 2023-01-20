@@ -13,18 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import bel.lisoveliy.selector.viewmodels.MainVM
 
 object Main {
 
     @Composable
-    fun Render(){
+    fun Render(navController: NavHostController){
         Main.ButtonsRenderer()
-        Main.ButtonCreateRenderer()
+        Main.ButtonCreateRenderer(navController)
     }
     @Composable
     private fun ButtonsRenderer() {
-        MainVM.UpdateState
         MainVM.streamButtons.forEach {
             Button(
                 onClick = {},
@@ -46,9 +46,9 @@ object Main {
     }
 
     @Composable
-    private fun ButtonCreateRenderer() {
+    private fun ButtonCreateRenderer(navController: NavHostController) {
         Button(
-            onClick = MainVM.ButtonCreateStream::onClicked,
+            onClick = { navController.navigate("streamCreator") },
             modifier = Modifier
                 .width(300.dp)
                 .height(150.dp)

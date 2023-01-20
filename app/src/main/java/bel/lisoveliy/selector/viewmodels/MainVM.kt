@@ -6,12 +6,12 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import bel.lisoveliy.selector.MainActivity
 import bel.lisoveliy.selector.logic.Data
 import bel.lisoveliy.selector.logic.SType
 import bel.lisoveliy.selector.logic.Stream
 
 object MainVM {
-
     var UpdateState by mutableStateOf(false)
     var streamButtons = ConvertToStreamButton(Data.Streams)
     //Instance of Addable button
@@ -20,9 +20,10 @@ object MainVM {
         var IconDiscription by mutableStateOf("Add stream")
         fun onClicked()
         {
-            Data.AddToStreams()
-            streamButtons = ConvertToStreamButton(Data.Streams)
-            UpdateState = !UpdateState
+            //MainActivity.navController.navigate("Creator")
+//            Data.AddToStreams()
+//            streamButtons = ConvertToStreamButton(Data.Streams)
+//            UpdateState = !UpdateState
         }
     }
     fun ConvertToStreamButton(streams: MutableList<Stream>): MutableList<StreamButton>{
@@ -39,7 +40,7 @@ object MainVM {
         {
             Data.DeleteFromStreams(self)
             streamButtons = ConvertToStreamButton(Data.Streams)
-            UpdateState = !UpdateState
+            MainVM.UpdateState = !MainVM.UpdateState
         }
     }
 }
