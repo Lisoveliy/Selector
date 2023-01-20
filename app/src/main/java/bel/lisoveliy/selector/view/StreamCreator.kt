@@ -51,6 +51,7 @@ object StreamCreator {
     @Composable
     fun URLField(){
         TextField(
+            modifier = Modifier.fillMaxWidth().padding(10.dp, 0.dp),
             value = URLField.value,
             onValueChange = URLField::onValueChange,
             label = { Text(URLField.label) },
@@ -59,6 +60,7 @@ object StreamCreator {
         )
         if(URLField.isError) {
             Text(
+                modifier = Modifier.padding(10.dp, 0.dp),
                 text = URLField.errorText,
                 color = MaterialTheme.colors.error
             )
@@ -67,6 +69,7 @@ object StreamCreator {
     @Composable
     fun TitleField(){
         TextField(
+            modifier = Modifier.fillMaxWidth().padding(10.dp, 0.dp),
             value = TitleField.value,
             onValueChange = TitleField::onValueChange,
             label = { Text(TitleField.label) },
@@ -75,6 +78,7 @@ object StreamCreator {
         )
         if(TitleField.isError) {
             Text(
+                modifier = Modifier.padding(10.dp, 0.dp),
                 text = TitleField.errorText,
                 color = MaterialTheme.colors.error
             )
@@ -84,8 +88,8 @@ object StreamCreator {
     fun SaveStreamButton(navController: NavHostController){
         Button(
             onClick = {
-                StreamCreatorVM.SaveButton.onPressed()
-                navController.navigate("menu")
+                    StreamCreatorVM.SaveButton.onPressed()
+                    navController.navigate("menu")
             },
             modifier = Modifier
                 .fillMaxWidth()
