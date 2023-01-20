@@ -11,6 +11,7 @@ import bel.lisoveliy.selector.logic.SType
 import bel.lisoveliy.selector.viewmodels.StreamCreatorVM
 import bel.lisoveliy.selector.viewmodels.StreamCreatorVM.URLField
 import bel.lisoveliy.selector.viewmodels.StreamCreatorVM.TitleField
+import kotlinx.coroutines.*
 
 object StreamCreator {
     @Composable
@@ -84,12 +85,21 @@ object StreamCreator {
             )
         }
     }
+    @OptIn(DelicateCoroutinesApi::class)
     @Composable
     fun SaveStreamButton(navController: NavHostController){
         Button(
             onClick = {
-                    StreamCreatorVM.SaveButton.onPressed()
-                    navController.navigate("menu")
+                GlobalScope.launch {
+                    if(StreamCreatorVM.MakeChecks()){
+                        StreamCreatorVM.SaveButton.onPressed()
+                        withContext(Dispatchers.Main) {
+                            navController.navigate("menu")
+                            URLField.value = ""
+                            TitleField.value = ""
+                        }
+                    }
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()

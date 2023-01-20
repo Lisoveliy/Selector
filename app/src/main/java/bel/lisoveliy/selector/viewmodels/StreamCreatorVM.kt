@@ -12,28 +12,15 @@ object StreamCreatorVM {
     // TODO: Make checks for creating title
     val URLField = Field(placeholder = "Enter URL for stream", label = "URL"
     ) { string: String, field: Field ->
-        when (RadioSelector.SelectedRadio) {
-            SType.M3U8 -> {
-                Thread {
-                    if (!Checks.checkm3u8url(string)) {
-                        field.setError(true, "Invalid m3u8")
-                    } else field.setError(false)
-                }.start()
-            }
-            SType.OTHER -> {
-                    field.setError(true, "Other types unchecked")
-            }
-        }
+        Thread {
+            MakeChecks()
+        }.start()
     }
     val TitleField = Field(placeholder = "Enter title of stream", label = "Title")
     { string: String, field: Field ->
-        if(field.value == "")
-        {
-            field.isError = true
-            field.errorText = "Title can't be empty"
-        }else {
-            field.isError = false
-        }
+        Thread {
+            MakeChecks()
+        }.start()
     }
 
     class Field(value: String = "",
@@ -82,5 +69,38 @@ object StreamCreatorVM {
             Data.AddToStreams(stream)
             MainVM.streamButtons = MainVM.ConvertToStreamButton(Data.Streams)
         }
+    }
+    fun MakeChecks(): Boolean{
+        var urlCheck = false
+        val titleCheck: Boolean
+        //URLCheck START
+        when (RadioSelector.SelectedRadio) {
+            SType.M3U8 -> {
+                    if (!Checks.checkm3u8url(URLField.value)) {
+                        URLField.setError(true, "Invalid m3u8")
+                        urlCheck = false
+                    } else {
+                        URLField.setError(false)
+                        urlCheck = true
+                    }
+            }
+            SType.OTHER -> {
+                URLField.setError(true, "Other types unchecked")
+                urlCheck = true
+            }
+        }
+        //URLCheck END
+        //TitleCheck START
+        if(TitleField.value == "")
+        {
+            TitleField.isError = true
+            TitleField.errorText = "Title can't be empty"
+            titleCheck = false
+        }else {
+            TitleField.isError = false
+            titleCheck = true
+        }
+        //TitleCheck END
+        return titleCheck && urlCheck
     }
 }
