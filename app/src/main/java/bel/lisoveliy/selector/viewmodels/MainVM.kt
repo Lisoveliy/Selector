@@ -11,9 +11,7 @@ import bel.lisoveliy.selector.logic.SType
 import bel.lisoveliy.selector.logic.Stream
 
 object MainVM {
-
-    var UpdateState by mutableStateOf(false)
-    var streamButtons = ConvertToStreamButton(Data.Streams)
+    var streamButtons by mutableStateOf(ConvertToStreamButton(Data.Streams))
     //Instance of Addable button
     object ButtonCreateStream{
         var Icon by mutableStateOf(Icons.Default.Add)
@@ -22,7 +20,6 @@ object MainVM {
         {
             Data.AddToStreams()
             streamButtons = ConvertToStreamButton(Data.Streams)
-            UpdateState = !UpdateState
         }
     }
     fun ConvertToStreamButton(streams: MutableList<Stream>): MutableList<StreamButton>{
@@ -39,7 +36,6 @@ object MainVM {
         {
             Data.DeleteFromStreams(self)
             streamButtons = ConvertToStreamButton(Data.Streams)
-            UpdateState = !UpdateState
         }
     }
 }

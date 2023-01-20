@@ -24,7 +24,6 @@ object Main {
     }
     @Composable
     private fun ButtonsRenderer() {
-        MainVM.UpdateState
         MainVM.streamButtons.forEach {
             Button(
                 onClick = {},
