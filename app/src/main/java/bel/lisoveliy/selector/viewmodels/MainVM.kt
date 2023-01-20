@@ -16,11 +16,6 @@ object MainVM {
     object ButtonCreateStream{
         var Icon by mutableStateOf(Icons.Default.Add)
         var IconDiscription by mutableStateOf("Add stream")
-        fun onClicked()
-        {
-            Data.AddToStreams()
-            streamButtons = ConvertToStreamButton(Data.Streams)
-        }
     }
     fun ConvertToStreamButton(streams: MutableList<Stream>): MutableList<StreamButton>{
         val output: MutableList<StreamButton> = ArrayList()

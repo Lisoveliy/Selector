@@ -1,26 +1,22 @@
 package bel.lisoveliy.selector.view
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import bel.lisoveliy.selector.viewmodels.MainVM
 
 object Main {
-
     @Composable
-    fun Render(){
-        Main.ButtonsRenderer()
-        Main.ButtonCreateRenderer()
+    fun Render(navController: NavHostController){
+        ButtonsRenderer()
+        ButtonCreateRenderer(navController)
     }
     @Composable
     private fun ButtonsRenderer() {
@@ -32,22 +28,30 @@ object Main {
                     .height(150.dp)
                     .padding(20.dp, 20.dp)
             ) {
-                Text(text = "ID: ${it.id.toString()}")
-                Icon(
-                    it.Icon,
-                    it.IconDiscription,
-                    modifier = Modifier
-                        .align(Alignment.Bottom)
-                        .clickable(onClick = { it.onClicked(it) })
-                )
+                Column {
+                    Text(text = "Title: ${it.title}")
+                    Text(text = "URL: ${it.url}")
+                    Text(text = "ID: ${it.id}")
+                    Text(text = "Type: ${it.type.name}")
+                    Row (
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier.fillMaxWidth()) {
+                        Icon(
+                            it.Icon,
+                            it.IconDiscription,
+                            modifier = Modifier
+                                .clickable(onClick = { it.onClicked(it) })
+                        )
+                    }
+                }
             }
         }
     }
 
     @Composable
-    private fun ButtonCreateRenderer() {
+    private fun ButtonCreateRenderer(navController : NavHostController) {
         Button(
-            onClick = MainVM.ButtonCreateStream::onClicked,
+            onClick = { navController.navigate("streamCreator")  },
             modifier = Modifier
                 .width(300.dp)
                 .height(150.dp)

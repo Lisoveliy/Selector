@@ -22,6 +22,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import bel.lisoveliy.selector.logic.Data
+import bel.lisoveliy.selector.logic.SType
+import bel.lisoveliy.selector.logic.Stream
 import bel.lisoveliy.selector.ui.theme.SelectorTheme
 import bel.lisoveliy.selector.view.Main
 import bel.lisoveliy.selector.view.StreamCreator
@@ -51,21 +53,20 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
     @Composable
-    @Preview
     fun StreamCreatorRenderer() {
         SelectorTheme {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = MaterialTheme.colors.background
             ) {
-                StreamCreator.Render()
+                StreamCreator.Render(navController)
             }
         }
     }
 
     @Composable
-    @Preview
     fun MainRenderer() {
         SelectorTheme {
             // A surface container using the 'background' color from the theme
@@ -77,7 +78,28 @@ class MainActivity : ComponentActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.verticalScroll(ScrollState(0))
                 ) {
-                    Main.Render()
+                    Main.Render(navController)
+                }
+            }
+        }
+    }
+    @Preview
+    @Composable
+    fun MainPreview(){
+        SelectorTheme {
+            // A surface container using the 'background' color from the theme
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colors.background
+            ) {
+                Data.Streams.add(Stream("Hello world", "https://url", SType.OTHER, System.currentTimeMillis()))
+                Data.Streams.add(Stream("Hello world2", "https://url2", SType.M3U8, System.currentTimeMillis()))
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.verticalScroll(ScrollState(0))
+                ) {
+                    navController = rememberNavController()
+                    Main.Render(navController)
                 }
             }
         }

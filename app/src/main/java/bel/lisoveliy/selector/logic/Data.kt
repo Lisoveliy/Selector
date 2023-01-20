@@ -20,9 +20,9 @@ object Data{
             Streams = Json.decodeFromString(file.readText())
         Log.v("Data: InitStreams", "Streams inited: ${Streams.size}")
     }
-    fun AddToStreams()
+    fun AddToStreams(stream: Stream)
     {
-        Streams.add(Stream("", "", SType.OTHER, System.currentTimeMillis()))
+        Streams.add(stream)
         Log.v("Data: AddToStreams", "Stream added. Streams size: ${Streams.size}")
         SaveStreams()
     }
