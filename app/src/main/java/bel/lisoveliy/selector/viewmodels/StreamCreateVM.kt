@@ -27,7 +27,7 @@ class StreamCreateVM(private val service: StreamsService): ViewModel() {
         viewModelScope.launch {
             creating = true
 
-            val stream = Stream(
+            val stream = Stream.Create(
                 title = title,
                 url = url,
                 type = type)
@@ -35,7 +35,7 @@ class StreamCreateVM(private val service: StreamsService): ViewModel() {
             when(service.addStream(stream)) {
                 AddStreamResponse.OK -> clear()
                 AddStreamResponse.STREAM_WITH_TITLE_ALREADY_EXISTS -> {
-                    TODO()
+                    titleError = "Стрим с таким заголовком уже существует"
                 }
             }
 

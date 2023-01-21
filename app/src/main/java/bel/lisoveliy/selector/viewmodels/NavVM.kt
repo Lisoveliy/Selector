@@ -1,30 +1,27 @@
 package bel.lisoveliy.selector.viewmodels
 
-import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavHostController
 
-class NavVM(context: Context): ViewModel() {
-    val navController = NavHostController(context)
-
+class NavVM: ViewModel() {
     var currentOption by mutableStateOf(NavOption.MAIN)
         private set
 
     fun navigateTo(option: NavOption) {
-        navController.navigate(option.path)
         currentOption = option
     }
 
-    enum class NavOption(val path: String, val Icon: ImageVector) {
-        MAIN("/", Icons.Default.Home),
-        STREAM_CREATE("/stream/create", Icons.Default.Add),
-        STREAM_EDIT("/stream/edit", Icons.Default.Edit)
+    enum class NavOption(val path: String, val Icon: ImageVector, val displayName: String) {
+        MAIN("/", Icons.Default.Home, "Главная"),
+        STREAM_CREATE("/stream/create", Icons.Default.Add, "Создать"),
+        STREAM_EDIT("/stream/edit", Icons.Default.Edit, "Изменить"),
+        STREAMS_LIST("/streams", Icons.Default.List, "Стримы")
     }
 
     companion object {
