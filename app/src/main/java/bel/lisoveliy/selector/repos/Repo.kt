@@ -8,12 +8,11 @@ import io.ktor.client.statement.*
 class Repo {
     private val http = HttpClient(CIO)
 
-    suspend fun check3u8Url(url: String): Boolean {
+    suspend fun getStringByUrl(url: String): String? {
         return try {
-            val res = http.get(url)
-            res.bodyAsText().contains("#EXTM3U")
+            http.get(url).bodyAsText()
         } catch (e: Exception) {
-            false
+            null
         }
     }
 }

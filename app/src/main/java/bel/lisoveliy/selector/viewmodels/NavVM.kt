@@ -7,9 +7,10 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 
-class NavVM(context: Context) {
+class NavVM(context: Context): ViewModel() {
     val navController = NavHostController(context)
 
     var currentOption by mutableStateOf(NavOption.MAIN)
